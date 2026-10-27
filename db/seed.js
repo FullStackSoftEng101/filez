@@ -1,4 +1,6 @@
 import db from "#db/client";
+import { createFile } from "#queries/files";
+import { createFolder } from "#queries/folders";
 
 await db.connect();
 await seed();
@@ -10,7 +12,7 @@ async function seed() {
 
   for (let i = 1; i <= 3; i++) {
     const folder = await createFolder("Folder " + i);
-    for (let j = 1; i <= 5; j++) {
+    for (let j = 1; j <= 5; j++) {
       await createFile("File " + j, 1000 * j, folder.id);
     }
   }

@@ -1,3 +1,4 @@
+import db from "#db/client";
 export async function createFolder(name) {
   const sql = `
     INSERT INTO folders
@@ -13,7 +14,7 @@ export async function createFolder(name) {
   return folder;
 }
 
-export async function getFolder() {
+export async function getFolders() {
   const sql = `
     SELECT * FROM folders
     `;
@@ -21,8 +22,8 @@ export async function getFolder() {
   return folders;
 }
 
-export asyn function getFolderByIdIncludingFIles(id){
-    const sql=`
+export async function getFolderByIdIncludingFiles(id) {
+  const sql = `
     SELECT *,
     (
         SELECT json_agg(files)
@@ -33,9 +34,8 @@ export asyn function getFolderByIdIncludingFIles(id){
     FROM folders
     WHERE id =$1
     `;
-    const{
-        rows: [folder].
-        
-    }= await db.query(sql,[id]);
-    return folder;
+  const {
+    rows: [folder],
+  } = await db.query(sql, [id]);
+  return folder;
 }
